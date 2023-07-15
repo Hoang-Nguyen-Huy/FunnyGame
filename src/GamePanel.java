@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.security.Key;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -21,6 +22,7 @@ public class GamePanel extends JPanel implements ActionListener {
     Timer timer;
     Random random;
     boolean showPlayText = true;
+    boolean showAgainText = false;
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -34,6 +36,20 @@ public class GamePanel extends JPanel implements ActionListener {
         running = false;
         showPlayText = true;
         timer = new Timer(DELAY, this);
+    }
+    public void playAgain() {
+        newApple();
+        bodyParts = 6;
+        applesEaten = 0;
+        direction = 'R';
+        for (int i = 0; i < bodyParts; i++) {
+            x[i] = 0;
+            y[i] = 0;
+        }
+        running = true;
+        showAgainText = false;
+        timer.start();
+        repaint();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -67,7 +83,7 @@ public class GamePanel extends JPanel implements ActionListener {
             if (showPlayText) {
                 drawStartText(g);
                 drawInstructions(g);
-            } else {
+            } else if (showAgainText) {
                 gameOver(g);
             }
         }
@@ -109,23 +125,28 @@ public class GamePanel extends JPanel implements ActionListener {
         for (int i = bodyParts; i > 0; i--) {
             if ((x[0] == x[i]) && (y[0] == y[i])) {
                 running = false;
+                showAgainText = true;
             }
         }
         // check if head touches left boreder
         if (x[0] < 0) {
             running = false;
+            showAgainText = true;
         }
         // check if head touches right boreder
         if (x[0] > SCREEN_WIDTH) {
             running = false;
+            showAgainText = true;
         }
         // check if head touches top boreder
         if (y[0] < 0) {
             running = false;
+            showAgainText = true;
         }
         // check if head touches bottom boreder
         if (y[0] > SCREEN_HEIGHT) {
             running = false;
+            showAgainText = true;
         }
         if (!running) {
             timer.stop();
@@ -142,6 +163,11 @@ public class GamePanel extends JPanel implements ActionListener {
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
         FontMetrics metrics = getFontMetrics(g.getFont());
         g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
+        //Play Again text
+        g.setColor(Color.white);
+        g.setFont(new Font("Ink Free", Font.BOLD, 20));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("Press Enter to Play Again", (SCREEN_WIDTH - metrics2.stringWidth("Press Enter to Play Again")) / 2, SCREEN_HEIGHT / 2 + 50);
     }
     public void drawStartText(Graphics g) {
         g.setColor(Color.white);
@@ -171,6 +197,11 @@ public class GamePanel extends JPanel implements ActionListener {
                 running = true;
                 showPlayText = false;
                 timer.start();
+            }
+            if (e.getKeyCode() == KeyEvent.VK_ENTER && showAgainText) {
+                running = true;
+                playAgain();
+                showAgainText = false;
             }
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
