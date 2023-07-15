@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     Timer timer;
     Random random;
-
+    boolean showPlayText = true;
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -31,9 +31,9 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void startGame() {
         newApple();
-        running = true;
+        running = false;
+        showPlayText = true;
         timer = new Timer(DELAY, this);
-        timer.start();
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -64,7 +64,12 @@ public class GamePanel extends JPanel implements ActionListener {
             FontMetrics metrics = getFontMetrics(g.getFont());
             g.drawString("Score: " + applesEaten, (SCREEN_WIDTH - metrics.stringWidth("Score: " + applesEaten))/2, g.getFont().getSize());
         } else {
-            gameOver(g);
+            if (showPlayText) {
+                drawStartText(g);
+                drawInstructions(g);
+            } else {
+                gameOver(g);
+            }
         }
     }
     public void newApple() {
@@ -138,6 +143,18 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics = getFontMetrics(g.getFont());
         g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
     }
+    public void drawStartText(Graphics g) {
+        g.setColor(Color.white);
+        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Play", (SCREEN_WIDTH - metrics.stringWidth("Play")) / 2, SCREEN_HEIGHT / 2);
+    }
+    public void drawInstructions(Graphics g) {
+        g.setColor(Color.white);
+        g.setFont(new Font("Ink Free", Font.PLAIN, 20));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Press Space to Play", (SCREEN_WIDTH - metrics.stringWidth("Press Space to Play")) / 2, SCREEN_HEIGHT / 2 + 50);
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         if (running) {
@@ -150,6 +167,11 @@ public class GamePanel extends JPanel implements ActionListener {
     public class MyKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_SPACE && showPlayText) {
+                running = true;
+                showPlayText = false;
+                timer.start();
+            }
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
                     if (direction != 'R') {
