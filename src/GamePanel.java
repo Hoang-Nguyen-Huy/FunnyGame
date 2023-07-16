@@ -164,10 +164,15 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics = getFontMetrics(g.getFont());
         g.drawString("Game Over", (SCREEN_WIDTH - metrics.stringWidth("Game Over"))/2, SCREEN_HEIGHT/2);
         //Play Again text
-        g.setColor(Color.white);
+        g.setColor(Color.yellow);
         g.setFont(new Font("Ink Free", Font.BOLD, 20));
         FontMetrics metrics2 = getFontMetrics(g.getFont());
         g.drawString("Press Enter to Play Again", (SCREEN_WIDTH - metrics2.stringWidth("Press Enter to Play Again")) / 2, SCREEN_HEIGHT / 2 + 50);
+        //Exit text
+        g.setColor(Color.white);
+        g.setFont(new Font("Ink Free", Font.BOLD, 19));
+        FontMetrics metrics3 = getFontMetrics(g.getFont());
+        g.drawString("Press Esc to Exit", (SCREEN_WIDTH - metrics3.stringWidth("Press Esc to Exit")) / 2, SCREEN_HEIGHT / 2 + 80);
     }
     public void drawStartText(Graphics g) {
         g.setColor(Color.white);
