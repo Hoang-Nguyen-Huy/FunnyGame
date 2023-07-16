@@ -13,7 +13,7 @@ public class Menu extends JFrame implements ActionListener {
     public Menu() {
         setTitle("Game Menu");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 500);
+        setSize(600, 600);
         setLocationRelativeTo(null);
 
         //Đặt nền background là màu đen
