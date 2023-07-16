@@ -1,10 +1,12 @@
 package Snake;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.security.Key;
 import java.util.Random;
+import GameMenu.Menu;
 
 public class GamePanel extends JPanel implements ActionListener {
 
@@ -87,6 +89,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 drawInstructions(g);
             } else if (showAgainText) {
                 gameOver(g);
+                BackToMenu(g);
             }
         }
     }
@@ -176,6 +179,12 @@ public class GamePanel extends JPanel implements ActionListener {
         FontMetrics metrics3 = getFontMetrics(g.getFont());
         g.drawString("Press Esc to Exit", (SCREEN_WIDTH - metrics3.stringWidth("Press Esc to Exit")) / 2, SCREEN_HEIGHT / 2 + 80);
     }
+    public void BackToMenu(Graphics g) {
+        g.setColor(Color.yellow);
+        g.setFont(new Font("Ink Free", Font.BOLD, 25));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Back", SCREEN_WIDTH - 70, 50);
+    }
     public void drawStartText(Graphics g) {
         g.setColor(Color.white);
         g.setFont(new Font("Ink Free", Font.BOLD, 75));
@@ -212,6 +221,10 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE && !running) {
                 System.exit(0); // Thoát game khi ấn phím Esc sau khi kết thúc
+            }
+            if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE && !running) {
+                SwingUtilities.getWindowAncestor(GamePanel.this).dispose();
+                new Menu();
             }
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
