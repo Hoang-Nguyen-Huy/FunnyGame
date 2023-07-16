@@ -208,6 +208,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 playAgain();
                 showAgainText = false;
             }
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE && !running) {
+                System.exit(0); // Thoát game khi ấn phím Esc sau khi kết thúc
+            }
             switch (e.getKeyCode()) {
                 case KeyEvent.VK_LEFT:
                     if (direction != 'R') {
