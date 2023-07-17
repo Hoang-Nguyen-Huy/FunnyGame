@@ -1,4 +1,5 @@
 package GameMenu;
+import FlappyBird.flappyBird;
 import Snake.GameFrame;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ public class Menu extends JFrame implements ActionListener {
 
     private JButton snakeButton;
     private JButton pingPongButton;
+    private JButton flappyBirdButton;
 
     public Menu() {
         setTitle("Game Menu");
@@ -28,17 +30,21 @@ public class Menu extends JFrame implements ActionListener {
 
         snakeButton = new JButton("Snake Game");
         pingPongButton = new JButton("Ping Pong");
+        flappyBirdButton = new JButton("Flappy Bird");
 
         // Đặt màu nền và màu chữ cho các nút
         snakeButton.setBackground(Color.black);
         snakeButton.setForeground(Color.yellow);
         pingPongButton.setBackground(Color.black);
         pingPongButton.setForeground(Color.yellow);
+        flappyBirdButton.setBackground(Color.black);
+        flappyBirdButton.setForeground(Color.yellow);
 
         // Đặt font chữ cho các nút
         Font buttonFont = new Font("Ink Free", Font.BOLD, 24);
         snakeButton.setFont(buttonFont);
         pingPongButton.setFont(buttonFont);
+        flappyBirdButton.setFont(buttonFont);
 
         // Đặt các nút vào giữa màn hình
         panel.add(snakeButton, constraints);
@@ -46,8 +52,12 @@ public class Menu extends JFrame implements ActionListener {
         constraints.gridy = 1;
         panel.add(pingPongButton, constraints);
 
+        constraints.gridy = 2;
+        panel.add(flappyBirdButton, constraints);
+
         snakeButton.addActionListener(this);
         pingPongButton.addActionListener(this);
+        flappyBirdButton.addActionListener(this);
 
         add(panel);
         setVisible(true);
@@ -62,6 +72,9 @@ public class Menu extends JFrame implements ActionListener {
         } else if (e.getSource() == pingPongButton) {
             // Xử lý khi người dùng chọn Ping Pong Game
             // ...
+        } else if (e.getSource() == flappyBirdButton) {
+            dispose();
+            new flappyBird().go();
         }
     }
 }
