@@ -1,5 +1,6 @@
 package FlappyBird;
 
+import GameMenu.Menu;
 import Snake.GamePanel;
 
 import java.awt.Image;
@@ -12,13 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
+import javax.swing.*;
 
 public class flappyBird implements ActionListener, KeyListener {
-    public static final int FPS = 100, WIDTH = 640, HEIGHT = 480;
+    public static final int FPS = 75, WIDTH = 640, HEIGHT = 480;
 
     private Bird bird;
     private JFrame frame;
@@ -97,9 +95,11 @@ public class flappyBird implements ActionListener, KeyListener {
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode()==KeyEvent.VK_UP) {
             bird.jump();
-        }
-        else if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+        } else if(e.getKeyCode()==KeyEvent.VK_SPACE) {
             paused = false;
+        } else if(e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            frame.dispose();
+            new Menu();
         }
     }
 
